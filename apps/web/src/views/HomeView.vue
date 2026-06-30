@@ -58,9 +58,6 @@ const STACK = [
     <section class="border-t border-ink-800 bg-ink-900/50 py-20">
       <div class="container-page">
         <header class="mb-12">
-          <div class="mb-2 font-mono text-sm text-ink-500">
-            <span class="prompt">#</span> section 02 · agents
-          </div>
           <h2 class="font-display text-3xl font-bold text-ink-100 md:text-4xl">
             // 智能体矩阵
           </h2>
@@ -84,9 +81,6 @@ const STACK = [
     <section class="border-t border-ink-800 py-20">
       <div class="container-page">
         <header class="mb-12">
-          <div class="mb-2 font-mono text-sm text-ink-500">
-            <span class="prompt">#</span> section 03 · tech_stack
-          </div>
           <h2 class="font-display text-3xl font-bold text-ink-100 md:text-4xl">
             // 技术栈
           </h2>
@@ -124,9 +118,6 @@ const STACK = [
     <section class="border-t border-ink-800 bg-ink-900/50 py-20">
       <div class="container-page">
         <header class="mb-12">
-          <div class="mb-2 font-mono text-sm text-ink-500">
-            <span class="prompt">#</span> section 04 · comparison
-          </div>
           <h2 class="font-display text-3xl font-bold text-ink-100 md:text-4xl">
             // 与 Dify / Coze 的差异化
           </h2>
