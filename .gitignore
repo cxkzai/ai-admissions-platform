@@ -65,3 +65,12 @@ coverage/
 
 # ===== Docker =====
 .docker/
+
+# ===== 敏感凭证（绝不入仓） =====
+*凭证*.md
+*信息*.md
+*password*.md
+*secret*.md
+*token*.md
+*.key
+*.pem
