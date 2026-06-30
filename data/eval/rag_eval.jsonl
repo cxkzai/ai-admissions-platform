@@ -1,0 +1,32 @@
+{"query": "8 岁孩子适合学什么课程？", "relevant_docs": ["Scratch 编程启蒙"], "expected_answer": "Scratch 启蒙（48 课时，¥5,800 起）", "kb_name": "courses"}
+{"query": "Python 基础课多少钱？", "relevant_docs": ["Python 编程基础"], "expected_answer": "原价 ¥8,800，限时优惠 ¥7,800", "kb_name": "courses"}
+{"query": "C++ 进阶课适合多大孩子？", "relevant_docs": ["C++ 算法进阶"], "expected_answer": "12-15 岁", "kb_name": "courses"}
+{"query": "信奥冲刺的老师是谁？", "relevant_docs": ["NOIP 信奥冲刺", "张子豪 · C++ / 信奥 竞赛总监"], "expected_answer": "张子豪老师（NOI 银牌教练）", "kb_name": "courses"}
+{"query": "冬令营多少钱？包食宿吗？", "relevant_docs": ["信息学奥赛冬令营"], "expected_answer": "¥5,800，食宿另收 ¥2,800", "kb_name": "courses"}
+{"query": "一对一多少钱一课时？", "relevant_docs": ["编程一对一"], "expected_answer": "¥380 / 课时", "kb_name": "courses"}
+{"query": "你们最厉害的 Scratch 老师是谁？", "relevant_docs": ["王晓明 · Scratch / Python 首席讲师", "陈思雨 · Scratch 启蒙讲师"], "expected_answer": "王晓明（微软 MVP，著有《少儿编程入门》）", "kb_name": "teachers"}
+{"query": "有没有清华毕业的老师？", "relevant_docs": ["李梦琪 · Python / NOIP 高级讲师", "张子豪 · C++ / 信奥 竞赛总监"], "expected_answer": "李梦琪老师（清华计算机硕士）、张子豪老师（清华本科）", "kb_name": "teachers"}
+{"query": "你们的师资稳定吗？", "relevant_docs": ["师资稳定性承诺"], "expected_answer": "近 3 年老师流失率为 0%", "kb_name": "teachers"}
+{"query": "NOI 银牌老师有几个？", "relevant_docs": ["张子豪 · C++ / 信奥 竞赛总监"], "expected_answer": "张子豪老师", "kb_name": "teachers"}
+{"query": "孩子几岁学编程合适？", "relevant_docs": ["Q1: 孩子几岁开始学编程合适？"], "expected_answer": "建议 8 岁开始接触 Scratch", "kb_name": "faq"}
+{"query": "学费有优惠吗？", "relevant_docs": ["Q5: 学费多少？有优惠吗？"], "expected_answer": "限时优惠、连报优惠、老学员推荐各 ¥500", "kb_name": "faq"}
+{"query": "和编程猫比有什么优势？", "relevant_docs": ["Q7: 和编程猫/核桃编程比有什么优势？"], "expected_answer": "小班教学、师资稳定、竞赛成绩强", "kb_name": "faq"}
+{"query": "学不会能退费吗？", "relevant_docs": ["Q8: 学不会怎么办？", "Q16: 退款政策是怎样的？"], "expected_answer": "支持退费，开课 1 周内可退 90%", "kb_name": "faq"}
+{"query": "试听课怎么安排？", "relevant_docs": ["Q4: 试听课怎么安排？"], "expected_answer": "免费 60 分钟，含面谈+体验课+课后沟通", "kb_name": "faq"}
+{"query": "在成都有哪些校区？", "relevant_docs": ["Q11: 你们有几个校区？在哪里？"], "expected_answer": "春熙路、高新、双流 3 个校区", "kb_name": "faq"}
+{"query": "女孩子学编程合适吗？", "relevant_docs": ["Q13: 女孩子适合学编程吗？"], "expected_answer": "女生占比 35%，非常适合", "kb_name": "faq"}
+{"query": "学完能参加什么比赛？", "relevant_docs": ["Q6: 学完之后能参加什么比赛？"], "expected_answer": "CSP-J/S、NOIP、蓝桥杯、NOI", "kb_name": "faq"}
+{"query": "孩子已经学过别的机构能转过来吗？", "relevant_docs": ["Q14: 孩子已经在学其他机构的课，要不要转过来？"], "expected_answer": "可以试听评估后插班", "kb_name": "faq"}
+{"query": "家长可以旁听吗？", "relevant_docs": ["Q10: 家长可以旁听吗？"], "expected_answer": "鼓励旁听，线下有家长休息区", "kb_name": "faq"}
+{"query": "有没有学员拿到 NOIP 一等奖？", "relevant_docs": ["案例 1：张同学 · 5 年级 NOIP 省一", "案例 3：陈同学 · CSP-J 2023 省一保送七中"], "expected_answer": "多名学员获省一，张同学、陈同学等", "kb_name": "cases"}
+{"query": "零基础孩子能学会吗？", "relevant_docs": ["案例 2：王同学 · 零基础 3 个月做出第一个游戏"], "expected_answer": "可以，3 个月可独立完成游戏", "kb_name": "cases"}
+{"query": "留学作品集能辅导吗？", "relevant_docs": ["案例 4：李同学 · 留学作品集拿到 CMU 录取"], "expected_answer": "周建国老师一对一指导，可申请 CMU 等名校", "kb_name": "cases"}
+{"query": "学编程对数学有帮助吗？", "relevant_docs": ["案例 5：赵同学 · 数学思维同步提升"], "expected_answer": "赵同学数学从 70 分提升到 90 分", "kb_name": "cases"}
+{"query": "新老师入职流程是怎样的？", "relevant_docs": ["新员工入职 7 天流程"], "expected_answer": "7 天流程：准备-观摩-培训-试讲-入职", "kb_name": "sop"}
+{"query": "试听课前要准备什么？", "relevant_docs": ["试听课接待 SOP"], "expected_answer": "教室检查、备课资料、茶歇、学员档案", "kb_name": "sop"}
+{"query": "退费流程是怎样的？", "relevant_docs": ["退费处理 SOP"], "expected_answer": "申请-审核-执行-跟进，3 工作日完成", "kb_name": "sop"}
+{"query": "怎么把家长转化成推荐人？", "relevant_docs": ["学员转介绍 SOP"], "expected_answer": "老学员推荐，双方各 ¥500 学费抵扣", "kb_name": "sop"}
+{"query": "首课没成交怎么跟？", "relevant_docs": ["试听后跟进话术"], "expected_answer": "24h 首跟、3 天深跟、7 天最后窗口", "kb_name": "scripts"}
+{"query": "家长说太贵了怎么办？", "relevant_docs": ["异议处理"], "expected_answer": "算单课时价、强调优惠、建议试听", "kb_name": "scripts"}
+{"query": "试听邀约怎么开口？", "relevant_docs": ["试听邀约话术（3 套）"], "expected_answer": "限时优惠、科学评估、成果展示 3 种模板", "kb_name": "scripts"}
+{"query": "孩子课程快结束了怎么续费？", "relevant_docs": ["续费提醒话术"], "expected_answer": "剩余 10/5 课时 + 结束时 3 次提醒", "kb_name": "scripts"}
