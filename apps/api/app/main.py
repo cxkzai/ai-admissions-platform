@@ -67,11 +67,10 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-# ===== 路由占位（Phase 1 后续填充） =====
-# from app.api.v1 import chat, admin, webhook
-# app.include_router(chat.router, prefix="/api/v1/chat", tags=["chat"])
-# app.include_router(admin.router, prefix="/api/v1/admin", tags=["admin"])
-# app.include_router(webhook.router, prefix="/api/v1/webhook", tags=["webhook"])
+# ===== 路由（Phase 1 已接入） =====
+from app.api.v1 import chat as chat_router
+
+app.include_router(chat_router.router, prefix="/api/v1")
 
 
 def run() -> None:
