@@ -1,0 +1,25 @@
+{
+  "name": "ai-admissions-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "教培机构 AI 招生顾问平台 - 多智能体 + RAG + 工作流",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.17",
+    "pnpm": ">=9.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @edu/web dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "type-check": "pnpm -r type-check",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r exec rm -rf node_modules .next dist"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0",
+    "eslint": "^9.10.0",
+    "typescript": "^5.6.0"
+  },
+  "packageManager": "[email protected]"
+}

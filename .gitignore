@@ -1,0 +1,67 @@
+# ===== Python / uv =====
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# ===== Node / pnpm =====
+node_modules/
+.next/
+.turbo/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# ===== 环境变量 =====
+.env
+.env.local
+.env.*.local
+.envrc
+
+# ===== 数据库 =====
+*.db
+*.sqlite
+*.sqlite3
+postgres_data/
+chroma_data/
+
+# ===== 日志 =====
+*.log
+logs/
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ===== 临时文件 =====
+tmp/
+temp/
+.cache/
+*.bak
+*.tmp
+
+# ===== 数据 / 知识库原始文档（生产数据不入仓） =====
+data/private/
+data/secrets/
+
+# ===== 测试覆盖率 =====
+coverage/
+.nyc_output/
+
+# ===== Docker =====
+.docker/

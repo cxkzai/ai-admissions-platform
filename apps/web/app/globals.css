@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50;
+  }
+
+  .card {
+    @apply rounded-xl border border-gray-200 bg-white shadow-sm;
+  }
+}
+
+/* Markdown 样式（聊天消息渲染） */
+.prose-chat {
+  @apply text-sm leading-relaxed;
+}
+
+.prose-chat p {
+  @apply mb-2 last:mb-0;
+}
+
+.prose-chat code {
+  @apply rounded bg-gray-100 px-1 py-0.5 text-xs;
+}
+
+.prose-chat pre {
+  @apply my-2 overflow-x-auto rounded-lg bg-gray-900 p-3 text-xs text-gray-100;
+}
+
+.prose-chat ul,
+.prose-chat ol {
+  @apply my-2 ml-4 list-disc space-y-1;
+}
