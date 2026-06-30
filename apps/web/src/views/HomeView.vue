@@ -177,6 +177,20 @@ const STACK = [
                 <td class="px-4 py-3 text-center">通用</td>
                 <td class="px-4 py-3 text-center">通用</td>
               </tr>
+              <tr>
+                <td class="px-4 py-3">成本（LLM 调用）</td>
+                <td class="px-4 py-3 text-center text-spark">¥1/M</td>
+                <td class="px-4 py-3 text-center">$3/M</td>
+                <td class="px-4 py-3 text-center">$3/M</td>
+                <td class="px-4 py-3 text-center">自托管</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">私有化部署</td>
+                <td class="px-4 py-3 text-center text-spark">✓</td>
+                <td class="px-4 py-3 text-center">✓</td>
+                <td class="px-4 py-3 text-center">—</td>
+                <td class="px-4 py-3 text-center">✓</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -184,14 +198,116 @@ const STACK = [
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-ink-800 py-8 font-mono text-xs text-ink-500">
-      <div class="container-page flex flex-col items-center gap-2 sm:flex-row sm:justify-between">
-        <span>
-          <span class="prompt">//</span> built by 张艺达 · MIT License
-        </span>
-        <span>
-          <span class="prompt">$</span> cat README.md | less
-        </span>
+    <footer class="border-t border-ink-800 bg-ink-900/50 py-12">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+
+          <!-- 品牌 -->
+          <div>
+            <div class="mb-3 flex items-center gap-2">
+              <span class="prompt font-mono">$</span>
+              <span class="font-display text-lg font-bold text-ink-100">AI-Admissions</span>
+            </div>
+            <p class="mb-4 text-sm leading-relaxed text-ink-300">
+              教培机构 AI 招生顾问平台。多智能体 + RAG + 工作流，端到端自研。
+            </p>
+            <p class="font-mono text-xs text-ink-500">
+              <span class="prompt">//</span> MIT License · 2026
+            </p>
+          </div>
+
+          <!-- 链接 -->
+          <div>
+            <h4 class="mb-4 font-mono text-xs uppercase tracking-wider text-ink-500">
+              <span class="prompt">#</span> Links
+            </h4>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="https://github.com/cxkzai/ai-admissions-platform"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 text-ink-300 transition hover:text-spark"
+                >
+                  <span class="prompt">git</span> GitHub 仓库 →
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/demo/chat"
+                  class="inline-flex items-center gap-2 text-ink-300 transition hover:text-spark"
+                >
+                  <span class="prompt">$</span> 在线 Demo →
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/demo/compare"
+                  class="inline-flex items-center gap-2 text-ink-300 transition hover:text-spark"
+                >
+                  <span class="prompt">$</span> 人机对比 →
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/cxkzai/ai-admissions-platform/blob/main/PRD.md"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 text-ink-300 transition hover:text-spark"
+                >
+                  <span class="prompt">$</span> 产品 PRD →
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 数据指标 -->
+          <div>
+            <h4 class="mb-4 font-mono text-xs uppercase tracking-wider text-ink-500">
+              <span class="prompt">#</span> Stats
+            </h4>
+            <dl class="space-y-2 font-mono text-sm">
+              <div class="flex items-baseline justify-between">
+                <dt class="text-ink-300">智能体</dt>
+                <dd class="text-ink-100">
+                  <span class="text-spark">4</span> 类
+                </dd>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <dt class="text-ink-300">知识库</dt>
+                <dd class="text-ink-100">
+                  <span class="text-spark">6</span> 类 / <span class="text-grow">32</span> 评测
+                </dd>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <dt class="text-ink-300">代码</dt>
+                <dd class="text-ink-100">
+                  <span class="text-spark">~7k</span> 行
+                </dd>
+              </div>
+              <div class="flex items-baseline justify-between">
+                <dt class="text-ink-300">LLM 适配</dt>
+                <dd class="text-ink-100">
+                  <span class="text-spark">3</span> 引擎可切换
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+        </div>
+
+        <!-- 底部署名 -->
+        <div class="mt-10 border-t border-ink-800 pt-6 font-mono text-xs text-ink-500">
+          <div class="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+            <span>
+              <span class="prompt">//</span> built by 张艺达
+            </span>
+            <span class="text-ink-700">·</span>
+            <span>
+              <span class="prompt">$</span> cat README.md | less
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   </main>
