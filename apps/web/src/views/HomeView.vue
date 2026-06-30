@@ -123,8 +123,8 @@ const STACK = [
           </h2>
         </header>
 
-        <div class="overflow-hidden rounded-lg border border-ink-800">
-          <table class="w-full font-mono text-sm">
+        <div class="overflow-x-auto rounded-lg border border-ink-800">
+          <table class="w-full min-w-[640px] font-mono text-sm">
             <thead class="bg-ink-800 text-xs text-ink-300">
               <tr>
                 <th class="px-4 py-3 text-left">能力</th>

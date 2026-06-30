@@ -78,7 +78,13 @@ setInterval(() => {
         <div class="border-b border-ink-700 bg-ink-800 px-4 py-2 font-mono text-xs text-ink-500">
           stdout
         </div>
-        <div class="space-y-1 p-5 font-mono text-sm leading-relaxed">
+        <div
+          class="space-y-1 p-5 font-mono text-sm leading-relaxed"
+          role="log"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-label="项目启动序列"
+        >
           <div v-for="(line, i) in displayedLines" :key="i" class="animate-fade-in text-grow">
             {{ line }}
           </div>
@@ -113,7 +119,7 @@ setInterval(() => {
         </router-link>
 
         <a
-          href="https://github.com/yourname/ai-admissions-platform"
+          href="https://github.com/cxkzai/ai-admissions-platform"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-mono text-sm text-ink-300 transition hover:text-ink-100"

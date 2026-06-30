@@ -10,10 +10,9 @@ defineProps<{
 <template>
   <router-link
     :to="{ path: '/demo/chat', query: { agent: agent.slug } }"
-    class="group relative block overflow-hidden rounded-lg border border-ink-800 bg-ink-900 p-6 transition hover:border-spark hover:shadow-lg hover:shadow-spark/10"
+    class="group relative block overflow-hidden rounded-lg border border-ink-800 bg-ink-900 p-6 transition hover:border-spark hover:bg-ink-800 hover:shadow-lg hover:shadow-spark/10"
   >
-    <!-- 顶部编号条 -->
-    <div class="absolute left-0 top-0 h-full w-1 bg-ink-800 transition group-hover:bg-spark"></div>
+    <!-- hover 时整体背景 tint 变化，取代装饰侧条 -->
 
     <!-- 编号 + 图标 -->
     <div class="mb-4 flex items-start justify-between">
