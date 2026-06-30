@@ -5,10 +5,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
 [![Node 20+](https://img.shields.io/badge/node-20+-green.svg)](https://nodejs.org/)
-[![Next.js 14](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
+[![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D.svg)](https://vuejs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
 
 > 🎯 V1 聚焦 **K12 少儿编程教育**（8-15 岁），可平滑扩展至其他赛道
+
+**🎨 设计语言**：深夜 IDE 终端风 — JetBrains Mono + Inter、ink/spark/grow 配色、`>` `$` `#` 终端提示符——让面试官一打开就有"这不是又一个 Vue 模板"的辨识度。
 
 ---
 
@@ -27,7 +29,7 @@
 
 | 层 | 技术 |
 |---|---|
-| 前端 | Next.js 14 · TypeScript · TailwindCSS · shadcn/ui |
+| 前端 | Vue 3 · Vite · TypeScript · TailwindCSS · 自研"深夜 IDE"设计 |
 | 后端 | FastAPI · SQLAlchemy 2.0 · Alembic |
 | LLM | Claude 3.5 Sonnet · DeepSeek · OpenAI |
 | 向量库 | Chroma（开发）/ pgvector（生产） |
@@ -67,7 +69,7 @@ cd apps/api
 uv sync
 uv run uvicorn app.main:app --reload --port 8000
 
-# 5. 启动前端（Next.js）
+# 5. 启动前端（Vue 3）
 cd ../web
 pnpm install
 pnpm dev
@@ -97,12 +99,20 @@ ai-admissions-platform/
 │   │   ├── alembic/              # 数据库迁移
 │   │   ├── tests/                # 单元测试
 │   │   └── pyproject.toml
-│   └── web/                      # Next.js 前端
-│       ├── app/                  # App Router 页面
-│       │   ├── demo/             # 演示台（对外）
-│       │   └── page.tsx          # 首页
-│       ├── components/
-│       ├── lib/
+│   └── web/                      # Vue 3 + Vite 前端
+│       ├── src/
+│       │   ├── views/            # 页面（Home / DemoChat / DemoCompare / 404）
+│       │   ├── components/       # 组件（TerminalHero / AgentCard / ChatMessage）
+│       │   ├── composables/      # useChat 等组合式函数
+│       │   ├── router/           # Vue Router 4
+│       │   ├── lib/              # API 客户端
+│       │   ├── types/            # 类型定义
+│       │   ├── assets/styles/    # main.css with design tokens
+│       │   ├── App.vue
+│       │   └── main.ts
+│       ├── index.html
+│       ├── vite.config.ts
+│       ├── tailwind.config.js
 │       └── package.json
 ├── packages/
 │   └── shared/                   # 前后端共享类型
@@ -209,5 +219,5 @@ MIT © 2026 张艺达
 - [DeepSeek](https://www.deepseek.com/) — 备选 LLM
 - [Chroma](https://www.trychroma.com/) — 向量数据库
 - [FastAPI](https://fastapi.tiangolo.com/) — 后端框架
-- [Next.js](https://nextjs.org/) — 前端框架
+- [Vue 3](https://vuejs.org/) — 前端框架
 - [Dify](https://dify.ai/) / [Coze](https://www.coze.com/) — 设计灵感与生态参考

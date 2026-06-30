@@ -1,0 +1,161 @@
+/* AI-Admissions Platform · 全局样式
+   Design tokens + Tailwind layers
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Design Tokens（CSS Variables） ===== */
+:root {
+  /* Ink scale */
+  --ink-950: #0B1437;
+  --ink-900: #11183D;
+  --ink-800: #1A1F4B;
+  --ink-700: #2D3470;
+  --ink-500: #6B7280;
+  --ink-300: #B8BCC9;
+  --ink-100: #F5F5F7;
+
+  /* Accent */
+  --spark: #FF6B35;
+  --grow: #7FD959;
+  --signal: #38BDF8;
+
+  /* Type */
+  --font-display: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Spacing scale */
+  --space-page-x: 2rem;
+  --space-section-y: 6rem;
+
+  /* Animation */
+  --ease-quart: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--ink-950);
+    color: var(--ink-100);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--ink-950);
+    font-family: var(--font-body);
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+    line-height: 1.6;
+  }
+
+  /* Custom selection */
+  ::selection {
+    background-color: var(--spark);
+    color: var(--ink-950);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ink-900);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--ink-700);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--spark);
+  }
+
+  /* Focus styles - accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--spark);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Terminal-style prompt prefix */
+  .prompt {
+    font-family: var(--font-display);
+    color: var(--grow);
+    user-select: none;
+  }
+
+  /* Markdown content（对话消息渲染） */
+  .prose-chat {
+    @apply text-sm leading-relaxed;
+  }
+
+  .prose-chat p {
+    @apply mb-2 last:mb-0;
+  }
+
+  .prose-chat code {
+    font-family: var(--font-display);
+    @apply rounded bg-ink-800 px-1.5 py-0.5 text-xs text-spark;
+  }
+
+  .prose-chat pre {
+    @apply my-2 overflow-x-auto rounded-lg border border-ink-700 bg-ink-900 p-3 text-xs;
+  }
+
+  .prose-chat pre code {
+    @apply bg-transparent p-0 text-ink-100;
+  }
+
+  .prose-chat ul,
+  .prose-chat ol {
+    @apply my-2 ml-5 list-outside space-y-1;
+  }
+
+  .prose-chat ul {
+    @apply list-disc;
+  }
+
+  .prose-chat ol {
+    @apply list-decimal;
+  }
+
+  .prose-chat a {
+    @apply text-signal underline decoration-signal/30 underline-offset-2 hover:decoration-signal;
+  }
+
+  /* Grid background */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Glow effect */
+  .glow-spark {
+    box-shadow: 0 0 24px rgba(255, 107, 53, 0.3);
+  }
+
+  .glow-grow {
+    box-shadow: 0 0 24px rgba(127, 217, 89, 0.3);
+  }
+}
