@@ -31,7 +31,7 @@
 |---|---|
 | 前端 | Vue 3 · Vite · TypeScript · TailwindCSS · 自研"深夜 IDE"设计 |
 | 后端 | FastAPI · SQLAlchemy 2.0 · Alembic |
-| LLM | Claude 3.5 Sonnet · DeepSeek · OpenAI |
+| LLM | **DeepSeek（主力）** · Claude 3.5 Sonnet · OpenAI（适配层一键切换） |
 | 向量库 | Chroma（开发）/ pgvector（生产） |
 | 数据库 | PostgreSQL 16 + pgvector |
 | 缓存 | Redis 7 |

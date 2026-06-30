@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
 
     # ===== LLM 引擎 =====
+    # 主力 = DeepSeek（中文好、价格低、面试官有代入感）
+    # 备选 = claude（演示效果最佳）、openai（兼容性强）
     llm_default_engine: Literal["claude", "deepseek", "openai"] = "deepseek"
 
     anthropic_api_key: str = ""
