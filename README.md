@@ -10,7 +10,7 @@
 
 > 🎯 V1 聚焦 **K12 少儿编程教育**（8-15 岁），可平滑扩展至其他赛道
 
-**🎨 设计语言**：深夜 IDE 终端风 — JetBrains Mono + Inter、ink/spark/grow 配色、`>` `$` `#` 终端提示符——让面试官一打开就有"这不是又一个 Vue 模板"的辨识度。
+**🎨 设计语言**：家长友好 + IDE 细节 — Light mode 米白主背景、ink/spark/grow 配色、JetBrains Mono + Inter、`#` `>` 终端提示符——让非技术访客（家长、面试官）一打开就觉得亲切、清晰，同时保留 IDE 风的辨识度（macOS 三圆点、bg-grid、glow-spark）。
 
 ---
 
@@ -54,29 +54,43 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/yourname/ai-admissions-platform.git
+git clone https://github.com/cxkzai/ai-admissions-platform.git
 cd ai-admissions-platform
 
 # 2. 复制环境变量
 cp .env.example .env
-# 编辑 .env，填入 ANTHROPIC_API_KEY 或 DEEPSEEK_API_KEY
+# 编辑 .env，填入 DEEPSEEK_API_KEY（必填）和 OPENAI_API_KEY（可选，Embedding 用）
+# ⚠️ 不要把 .env 提交到 Git（已在 .gitignore）
 
 # 3. 启动基础服务（Postgres + Redis + Chroma）
+#    chroma 用 bash 内置 /dev/tcp 做健康检查（镜像精简无 curl）
 docker compose up -d
 
 # 4. 启动后端（FastAPI）
 cd apps/api
-uv sync
-uv run uvicorn app.main:app --reload --port 8000
+uv sync                                        # 装 205 个包（含 torch / chromadb / unstructured）
+uv run alembic upgrade head                    # 跑数据库迁移（PostgreSQL + pgvector）
+uv run python -m scripts.ingest_kb             # 导入知识库到 Chroma（48 chunks）
+uv run python -m app.main                      # 启动后端（reload 模式，端口 8000）
 
 # 5. 启动前端（Vue 3）
 cd ../web
-pnpm install
-pnpm dev
+pnpm install                                   # pnpm-workspace.yaml 已配 allowBuilds: esbuild / vue-demi
+pnpm dev                                       # 启动 Vite dev server（端口 3000）
 
 # 6. 访问
 # 前端 Demo：http://localhost:3000
 # 后端 API：http://localhost:8000/docs
+# 健康检查：http://localhost:8000/api/v1/health
+```
+
+### 🌐 公网访问（可选，给面试官发链接）
+
+```bash
+# 用 ngrok 把 3000 端口暴露到公网（Vite proxy 内部转发到 8000，一条 tunnel 整条链路）
+ngrok http 3000
+# 输出 Forwarding 行：https://xxxx.ngrok-free.dev -> http://localhost:3000
+# 把 https://xxxx.ngrok-free.dev 发给面试官即可（首次访问要点 "Visit Site" 跳过 ngrok 警告页）
 ```
 
 ---
@@ -143,22 +157,29 @@ ai-admissions-platform/
 ### ✅ Phase 1 · MVP（第 1-2 周）
 
 - [x] 项目脚手架 + Docker + CI
-- [ ] 数据模型 + Alembic 迁移
-- [ ] LLM 适配层（Claude + DeepSeek）
-- [ ] 招生顾问 Agent + 课程库 / FAQ 库
-- [ ] Web 演示台（演示对话）
-- [ ] 本地跑通 + 录 Demo 视频
+- [x] 数据模型 + Alembic 迁移（PostgreSQL + pgvector）
+- [x] LLM 适配层（DeepSeek 主力 + Claude / OpenAI 备选）
+- [x] 招生顾问 Agent + 6 类知识库（RAG 跑通，48 chunks 索引）
+- [x] Web 演示台（Vue 3 + Vite，真实后端对话联调）
+- [x] 对话历史（sessionStorage 持久化，切 agent 自动清空 + 加载回放 + 合并更新）
+- [x] 真实后端健康检查 + 错误提示 banner + 重试按钮
+- [x] 本地跑通 + ngrok 公网暴露
+- [x] 4 个 root cause bug 修复（workspace / chroma health / CORS / GBK emoji）
+
+> **Phase 1 全部完成**。4 个 Agent 实际都已接好（超出 Phase 1 范围），见 Phase 2 部分。
 
 ### 📋 Phase 2 · 完整产品（第 3-4 周）
 
-- [ ] 课程顾问 / 教务老师 / 内部助手 Agent
+- [x] 课程顾问 / 教务老师 / 内部助手 Agent（**提前在 Phase 1 完成**）
 - [ ] 招生全链路工作流引擎
 - [ ] 数据看板（漏斗 / 效能 / 知识库）
 - [ ] 飞书 / 企微 Webhook
 
 ### 🚀 Phase 3 · 部署上线（第 5 周）
 
-- [ ] Docker 化 + Vercel + Railway 部署
+- [x] Docker Compose 一键启动（Postgres + Redis + Chroma）
+- [x] ngrok 公网暴露（演示用，临时域名）
+- [ ] Vercel + Railway 正式部署
 - [ ] 域名 + HTTPS + 监控
 - [ ] README 完善 + 架构图 + Demo 视频
 
@@ -215,9 +236,10 @@ MIT © 2026 张艺达
 
 ## 🙏 致谢
 
-- [Anthropic Claude](https://www.anthropic.com/) — 主力 LLM
-- [DeepSeek](https://www.deepseek.com/) — 备选 LLM
+- [DeepSeek](https://www.deepseek.com/) — 主力 LLM（中文好、¥1/M token 便宜、面试官有代入感）
+- [Anthropic Claude](https://www.anthropic.com/) — 备选 LLM（演示效果最佳）
 - [Chroma](https://www.trychroma.com/) — 向量数据库
 - [FastAPI](https://fastapi.tiangolo.com/) — 后端框架
 - [Vue 3](https://vuejs.org/) — 前端框架
 - [Dify](https://dify.ai/) / [Coze](https://www.coze.com/) — 设计灵感与生态参考
+- [ngrok](https://ngrok.com/) — 公网隧道（演示给面试官用）

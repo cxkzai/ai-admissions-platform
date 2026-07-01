@@ -936,17 +936,19 @@ Week 6    ──►  打磨：补充文档、案例截图、录 Demo 视频
 
 #### Phase 1：MVP（Week 1-2，约 10 工作日）
 
-- [ ] Day 1-2：项目脚手架（前后端 + Docker Compose + CI）
-- [ ] Day 3-4：LLM 适配层 + Agent Service 框架
-- [ ] Day 5-6：招生顾问 Agent + 课程库知识库（RAG 流程跑通）
-- [ ] Day 7-8：Next.js 演示台（聊天界面 + 1 个 Agent 选择）
-- [ ] Day 9-10：种子数据 + 本地跑通 + 录演示视频
+- [x] Day 1-2：项目脚手架（Vue 3 前端 + FastAPI 后端 + Docker Compose + CI）
+- [x] Day 3-4：LLM 适配层（DeepSeek 主力 + Claude / OpenAI 备选）+ Agent Service 框架
+- [x] Day 5-6：招生顾问 Agent + 6 类知识库（RAG 流程跑通，48 chunks 索引到 Chroma）
+- [x] Day 7-8：Vue 3 演示台（聊天界面 + 4 个 Agent 切换）
+- [x] Day 9-10：本地跑通（Docker + Vite + FastAPI）+ ngrok 公网暴露
+- [x] **额外**：对话历史（sessionStorage 持久化）+ 真实后端健康检查 + 错误提示 + 重试
+- [x] **额外**：4 个 root cause bug 修复（workspace 误配 / chroma healthcheck v1 API 弃用 / pydantic CORS JSON 解析 / Windows GBK emoji）
 
-**M1 验收标准**：访问 `/demo/chat`，能与招生顾问 Agent 聊课程、能查知识库、截图可放到 GitHub
+**M1 验收标准**：✅ 满足。访问 `/demo/chat` 能与 4 个 Agent 中任一对话、能查知识库（RAG 命中）、能切 Agent 保留历史、错误时显示 banner、ngrok 暴露公网可发链接。**4 个 Agent 已超出 Phase 1 范围，提前到 Phase 2 完成**。
 
 #### Phase 2：完整产品（Week 3-4，约 10 工作日）
 
-- [ ] Day 11-13：增加 3 个 Agent（课程顾问 / 教务老师 / 内部助手）
+- [x] Day 11-13：增加 3 个 Agent（课程顾问 / 教务老师 / 内部助手）**【Phase 1 提前完成】**
 - [ ] Day 14-16：工作流引擎 + 招生全链路工作流
 - [ ] Day 17-19：数据看板 + 管理后台
 - [ ] Day 20：飞书 Webhook + 企微 Webhook
@@ -1000,8 +1002,8 @@ Week 6    ──►  打磨：补充文档、案例截图、录 Demo 视频
 ### 11.1 GitHub 仓库优化
 
 - **仓库名**：`ai-admissions-platform`（开发目录 `edu-copilot/`）
-- **描述**：A multi-agent AI platform for education recruitment · 教培机构 AI 招生顾问平台 · Built with Next.js + FastAPI + Claude · 自研 + 兼容 Dify/Coze
-- **Topics**：`ai-agent` · `rag` · `fastapi` · `nextjs` · `claude` · `deepseek` · `multi-agent` · `education` · `chatbot` · `langchain`
+- **描述**：A multi-agent AI platform for education recruitment · 教培机构 AI 招生顾问平台 · Built with Vue 3 + FastAPI + DeepSeek · 自研 + 兼容 Dify/Coze
+- **Topics**：`ai-agent` · `rag` · `fastapi` · `vue3` · `deepseek` · `claude` · `multi-agent` · `education` · `chatbot` · `pgvector`
 - **About 区**：附个人简介 + 项目亮点 3 条 + Demo 链接
 - **Pin 仓库**：把这个仓库置顶
 
@@ -1057,6 +1059,7 @@ Week 6    ──►  打磨：补充文档、案例截图、录 Demo 视频
 |---|---|---|---|
 | v0.1 | 2026-06-30 | 初稿，覆盖业务/用户/功能/技术/部署/投递 12 章 | 张艺达 |
 | v0.2 | 2026-06-30 | 自我审阅后修订：① 项目名统一为 AI-Admissions Platform；② 新增 3.8 与 Dify/Coze/扣子/FastGPT 关系与差异化；③ 新增 3.9 演示种子数据设定（码力星编程虚构机构）；④ 业务聚焦 K12 少儿编程教育；⑤ 简历模板更新；⑥ 仓库描述与 Topics 优化 | 张艺达 |
+| v0.3 | 2026-07-01 | 本地联调完成后修订：① Phase 1 全部完成（含 4 个 root cause 修复：workspace 误配 / chroma healthcheck v1 API 弃用 / pydantic CORS JSON 解析 / Windows GBK emoji）；② 4 个 Agent 全部接好（超出 Phase 1 范围，提前到 Phase 2 完成）；③ 新增对话历史功能（sessionStorage 持久化、切 agent 自动清空、加载回放、合并更新）；④ 新增真实后端健康检查 + 错误 banner + 重试按钮；⑤ 仓库描述 Next.js → Vue 3 修正；⑥ 新增 ngrok 公网访问说明 | 张艺达 |
 
 ---
 
