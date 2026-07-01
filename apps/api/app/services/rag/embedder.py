@@ -2,6 +2,8 @@
 
 from abc import ABC, abstractmethod
 
+from loguru import logger
+
 from app.core.config import settings
 
 
@@ -169,7 +171,7 @@ def get_embedder() -> BaseEmbedder:
 
     if provider == "openai":
         if not settings.openai_api_key:
-            print("⚠️ OPENAI_API_KEY 未配置，降级到 Mock Embedder")
+            logger.warning("OPENAI_API_KEY 未配置，降级到 Mock Embedder")
             return MockEmbedder(dim=384)
         return OpenAIEmbedder(
             api_key=settings.openai_api_key,

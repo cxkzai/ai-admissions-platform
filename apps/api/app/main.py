@@ -12,6 +12,7 @@ from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from loguru import logger
 
 from app.core.config import settings
 
@@ -20,13 +21,13 @@ from app.core.config import settings
 async def lifespan(app: FastAPI):
     """应用生命周期."""
     # 启动
-    print(f"🚀 {settings.app_name} v{settings.app_version} starting...")
-    print(f"📡 API: http://{settings.api_host}:{settings.api_port}")
-    print(f"📚 Docs: http://{settings.api_host}:{settings.api_port}/docs")
-    print(f"🤖 LLM Engine: {settings.llm_default_engine}")
+    logger.info(f"[startup] {settings.app_name} v{settings.app_version}")
+    logger.info(f"[startup] API: http://{settings.api_host}:{settings.api_port}")
+    logger.info(f"[startup] Docs: http://{settings.api_host}:{settings.api_port}/docs")
+    logger.info(f"[startup] LLM Engine: {settings.llm_default_engine}")
     yield
     # 关闭
-    print("👋 Shutting down...")
+    logger.info("[shutdown] Shutting down...")
 
 
 app = FastAPI(
@@ -64,6 +65,12 @@ async def root() -> dict[str, Any]:
 @app.get("/health")
 async def health() -> dict[str, str]:
     """健康检查."""
+    return {"status": "ok"}
+
+
+@app.get("/api/v1/health", include_in_schema=False)
+async def api_v1_health() -> dict[str, str]:
+    """v1 路径下的健康检查（与 /health 相同，供前端 Vite proxy 调用）。"""
     return {"status": "ok"}
 
 

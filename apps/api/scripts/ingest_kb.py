@@ -36,11 +36,11 @@ async def ingest_all(reset: bool = False) -> None:
     service = get_rag_service()
 
     if reset:
-        console.print("[yellow]⚠️  Resetting vector store...[/yellow]")
+        console.print("[yellow]WARNING: Resetting vector store...[/yellow]")
         service.vector_store.delete_by_filter({})
-        console.print("[green]✓ Cleared all chunks[/green]")
+        console.print("[green][OK] Cleared all chunks[/green]")
 
-    table = Table(title="📥 Knowledge Base Ingestion", show_header=True)
+    table = Table(title="Knowledge Base Ingestion", show_header=True)
     table.add_column("Library", style="cyan")
     table.add_column("Docs", justify="right", style="green")
     table.add_column("Chunks", justify="right", style="green")
@@ -51,7 +51,7 @@ async def ingest_all(reset: bool = False) -> None:
     for kb_name, dir_path in KB_DIRS.items():
         full_path = Path(dir_path)
         if not full_path.exists():
-            table.add_row(kb_name, "—", "—", "—", "[red]dir not found[/red]")
+            table.add_row(kb_name, "-", "-", "-", "[red]dir not found[/red]")
             continue
 
         try:
@@ -62,14 +62,14 @@ async def ingest_all(reset: bool = False) -> None:
                 str(result.document_count),
                 str(result.chunk_count),
                 f"{result.elapsed_seconds:.2f}s",
-                "[green]✓ ok[/green]",
+                "[green]+ ok[/green]",
             )
         except Exception as e:
             logger.exception(f"Ingestion failed for {kb_name}")
-            table.add_row(kb_name, "—", "—", "—", f"[red]✗ {e}[/red]")
+            table.add_row(kb_name, "-", "-", "-", f"[red][FAIL] {e}[/red]")
 
     console.print(table)
-    console.print(f"\n[bold green]✓ Total chunks indexed: {total_chunks}[/bold green]")
+    console.print(f"\n[bold green][OK] Total chunks indexed: {total_chunks}[/bold green]")
 
     # 统计
     stats = service.stats()
@@ -80,7 +80,7 @@ async def ingest_all(reset: bool = False) -> None:
 async def ingest_one(kb_name: str, reset: bool = False) -> None:
     """导入单个知识库."""
     if kb_name not in KB_DIRS:
-        console.print(f"[red]✗ Unknown KB: {kb_name}[/red]")
+        console.print(f"[red][FAIL] Unknown KB: {kb_name}[/red]")
         console.print(f"[yellow]Available: {list(KB_DIRS.keys())}[/yellow]")
         return
 
@@ -90,7 +90,7 @@ async def ingest_one(kb_name: str, reset: bool = False) -> None:
 
     result = await service.ingest_directory(KB_DIRS[kb_name], kb_name)
     console.print(
-        f"[green]✓ {kb_name}: {result.document_count} docs, {result.chunk_count} chunks in {result.elapsed_seconds:.2f}s[/green]"
+        f"[green][OK] {kb_name}: {result.document_count} docs, {result.chunk_count} chunks in {result.elapsed_seconds:.2f}s[/green]"
     )
 
 

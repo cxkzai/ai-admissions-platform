@@ -3,11 +3,12 @@
 使用 pydantic-settings 从环境变量与 .env 文件加载配置.
 """
 
+import json
 from functools import lru_cache
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -31,9 +32,22 @@ class Settings(BaseSettings):
     api_host: str = "0.0.0.0"
     api_port: int = 8000
     api_base_url: str = "http://localhost:8000"
-    api_cors_origins: list[str] = Field(
+    # NoDecode 禁用 pydantic-settings 内置的 json.loads 解析（它会拒绝逗号分隔）
+    # 由下面的 _parse_cors_origins 自定义处理：接受逗号分隔或 JSON 数组
+    api_cors_origins: Annotated[list[str], NoDecode] = Field(
         default_factory=lambda: ["http://localhost:3000"],
     )
+
+    @field_validator("api_cors_origins", mode="before")
+    @classmethod
+    def _parse_cors_origins(cls, v: object) -> object:
+        """允许 .env 写逗号分隔字符串或 JSON 数组两种格式."""
+        if isinstance(v, str):
+            s = v.strip()
+            if s.startswith("["):
+                return json.loads(s)
+            return [item.strip() for item in s.split(",") if item.strip()]
+        return v
 
     # ===== 数据库 =====
     database_url: str = (
