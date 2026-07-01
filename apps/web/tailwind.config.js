@@ -8,37 +8,39 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ===== 深夜 IDE 主题色 =====
+        // ===== 浅色主题：ink 数字越大颜色越深 =====
         ink: {
-          950: '#0B1437',  // 主背景 - 深夜蓝
-          900: '#11183D',  // 次背景
-          800: '#1A1F4B',  // 卡片背景
-          700: '#2D3470',  // 浮层
-          500: '#6B7280',  // 辅助文本
-          300: '#B8BCC9',  // 次文本
-          100: '#F5F5F7',  // 主文本
+          50:  '#FAF8F5',   // 主背景（温暖米白）
+          100: '#FFFFFF',   // 卡片背景
+          200: '#F5F5F4',   // 次背景
+          300: '#E7E5E4',   // 边框/分隔线
+          400: '#D6D3D1',   // 强边框
+          500: '#A8A29E',   // 辅助文本
+          600: '#78716C',   // 次文本
+          700: '#57534E',   // 主次文本
+          800: '#44403C',   // 强文本
+          900: '#1C1917',   // 主文本
+          950: '#0C0A09',   // 最深文本/标题
         },
-        // ===== 教培温暖 + 编程勇气 =====
+        // ===== 品牌色：light mode 用稍深版本保证对比度 =====
         spark: {
-          DEFAULT: '#FF6B35',  // 暖橙
-          light: '#FF8F66',
-          dark: '#E54B17',
+          DEFAULT: '#EA580C',  // 暖橙（orange-600）
+          light:   '#F97316',
+          dark:    '#C2410C',
         },
-        // ===== 成功转化 =====
         grow: {
-          DEFAULT: '#7FD959',  // 柠檬绿
-          dark: '#5BBA38',
+          DEFAULT: '#16A34A',  // 绿（green-600）
+          dark:    '#15803D',
         },
-        // ===== 信息青 =====
         signal: {
-          DEFAULT: '#38BDF8',
-          dark: '#0284C7',
+          DEFAULT: '#0284C7',  // 青（sky-600）
+          dark:    '#0369A1',
         },
       },
       fontFamily: {
-        // 显示字体 - 程序员字体（终端风）
+        // 显示字体 - 程序员字体（保留作为 signature element）
         display: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace'],
-        // 正文字体 - 现代无衬线
+        // 正文字体 - 现代无衬线（家长友好）
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         // 等宽字体 - 代码 / 标签
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
@@ -77,7 +79,7 @@ export default {
         },
       },
       backgroundImage: {
-        'grid': "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+        'grid': "linear-gradient(rgba(28,25,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(28,25,23,0.04) 1px, transparent 1px)",
       },
     },
   },

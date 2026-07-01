@@ -10,25 +10,25 @@ defineProps<{
 <template>
   <router-link
     :to="{ path: '/demo/chat', query: { agent: agent.slug } }"
-    class="group relative block overflow-hidden rounded-lg border border-ink-800 bg-ink-900 p-6 transition hover:border-spark hover:bg-ink-800 hover:shadow-lg hover:shadow-spark/10"
+    class="group relative block overflow-hidden rounded-lg border border-ink-300 bg-ink-100 p-6 transition hover:border-spark hover:bg-ink-200 hover:shadow-lg hover:shadow-spark/10"
   >
     <!-- hover 时整体背景 tint 变化，取代装饰侧条 -->
 
     <!-- 编号 + 图标 -->
     <div class="mb-4 flex items-start justify-between">
-      <span class="font-mono text-xs text-ink-500">
+      <span class="font-mono text-xs text-ink-600">
         [{{ String(index + 1).padStart(2, '0') }}]
       </span>
       <span class="text-3xl">{{ agent.icon }}</span>
     </div>
 
     <!-- 名称 -->
-    <h3 class="mb-2 font-display text-lg font-bold text-ink-100 group-hover:text-spark">
+    <h3 class="mb-2 font-display text-lg font-bold text-ink-900 group-hover:text-spark">
       {{ agent.name }}
     </h3>
 
     <!-- 描述 -->
-    <p class="mb-4 text-sm leading-relaxed text-ink-300">
+    <p class="mb-4 text-sm leading-relaxed text-ink-700">
       {{ agent.description }}
     </p>
 
@@ -37,20 +37,20 @@ defineProps<{
       <span
         v-for="tool in agent.tools"
         :key="tool"
-        class="rounded border border-ink-700 bg-ink-950 px-2 py-0.5 font-mono text-xs text-ink-300"
+        class="rounded border border-ink-300 bg-ink-50 px-2 py-0.5 font-mono text-xs text-ink-700"
       >
         {{ tool }}
       </span>
     </div>
 
     <!-- 底部状态 -->
-    <div class="flex items-center gap-2 border-t border-ink-800 pt-3 font-mono text-xs">
+    <div class="flex items-center gap-2 border-t border-ink-300 pt-3 font-mono text-xs">
       <span class="relative flex h-2 w-2">
         <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-grow opacity-75"></span>
         <span class="relative inline-flex h-2 w-2 rounded-full bg-grow"></span>
       </span>
-      <span class="text-ink-500">online</span>
-      <span class="ml-auto text-ink-500 transition group-hover:text-spark">try →</span>
+      <span class="text-ink-600">在线</span>
+      <span class="ml-auto text-ink-600 transition group-hover:text-spark">试用 →</span>
     </div>
   </router-link>
 </template>

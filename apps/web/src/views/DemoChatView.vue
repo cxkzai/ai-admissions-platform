@@ -101,20 +101,20 @@ const handleSample = (text: string) => {
 </script>
 
 <template>
-  <main class="flex h-screen flex-col bg-ink-950">
+  <main class="flex h-screen flex-col bg-ink-50">
     <!-- 顶部 -->
-    <header class="border-b border-ink-800 bg-ink-900">
+    <header class="border-b border-ink-300 bg-ink-100">
       <div class="container-page flex items-center gap-4 py-3">
         <router-link
           to="/"
-          class="font-mono text-sm text-ink-300 transition hover:text-spark"
+          class="text-sm text-ink-700 transition hover:text-spark"
         >
-          <span class="prompt">$</span> cd ..
+          ← 返回首页
         </router-link>
         <span class="text-ink-700">/</span>
-        <span class="font-mono text-sm text-ink-100">demo/chat</span>
-        <span class="ml-auto font-mono text-xs text-ink-500">
-          <span class="prompt">#</span> mock_mode={{ messages.length === 0 ? 'on' : 'off' }}
+        <span class="text-sm font-medium text-ink-900">智能体对话</span>
+        <span class="ml-auto text-xs text-ink-600">
+          {{ messages.length === 0 ? '演示模式（未连接后端）' : '已连接后端' }}
         </span>
       </div>
 
@@ -128,7 +128,7 @@ const handleSample = (text: string) => {
             'flex items-center gap-2 whitespace-nowrap rounded-t-lg border-b-2 px-4 py-2 font-mono text-sm transition',
             currentSlug === agent.slug
               ? 'border-spark text-spark'
-              : 'border-transparent text-ink-300 hover:text-ink-100',
+              : 'border-transparent text-ink-700 hover:text-ink-900',
           ]"
         >
           <span>{{ agent.icon }}</span>
@@ -139,22 +139,22 @@ const handleSample = (text: string) => {
 
     <div class="flex flex-1 overflow-hidden">
       <!-- 左侧 Agent 介绍 -->
-      <aside class="hidden w-72 shrink-0 overflow-y-auto border-r border-ink-800 bg-ink-900/50 p-6 lg:block">
+      <aside class="hidden w-72 shrink-0 overflow-y-auto border-r border-ink-300 bg-ink-200/60 p-6 lg:block">
         <div class="mb-4 text-4xl">{{ currentAgent.icon }}</div>
-        <h2 class="mb-2 font-display text-xl font-bold text-ink-100">
+        <h2 class="mb-2 font-display text-xl font-bold text-ink-900">
           {{ currentAgent.name }}
         </h2>
-        <p class="mb-6 text-sm text-ink-300">{{ currentAgent.description }}</p>
+        <p class="mb-6 text-sm text-ink-700">{{ currentAgent.description }}</p>
 
         <div class="mb-6">
-          <div class="mb-2 font-mono text-xs text-ink-500">
+          <div class="mb-2 font-mono text-xs text-ink-600">
             <span class="prompt">#</span> tools
           </div>
           <div class="flex flex-wrap gap-1.5">
             <span
               v-for="tool in currentAgent.tools"
               :key="tool"
-              class="rounded border border-ink-700 bg-ink-950 px-2 py-0.5 font-mono text-xs text-ink-300"
+              class="rounded border border-ink-300 bg-ink-50 px-2 py-0.5 font-mono text-xs text-ink-700"
             >
               {{ tool }}
             </span>
@@ -162,10 +162,10 @@ const handleSample = (text: string) => {
         </div>
 
         <div class="mb-6">
-          <div class="mb-2 font-mono text-xs text-ink-500">
-            <span class="prompt">#</span> capabilities
+          <div class="mb-2 font-mono text-xs text-ink-600">
+            <span class="prompt">#</span> 我们的优点
           </div>
-          <ul class="space-y-1.5 text-sm text-ink-300">
+          <ul class="space-y-1.5 text-sm text-ink-700">
             <li class="flex gap-2"><span class="text-spark">▸</span> 多轮对话挖掘需求</li>
             <li class="flex gap-2"><span class="text-spark">▸</span> RAG 检索课程/师资</li>
             <li class="flex gap-2"><span class="text-spark">▸</span> Function Calling</li>
@@ -175,9 +175,9 @@ const handleSample = (text: string) => {
 
         <button
           @click="clear"
-          class="w-full rounded border border-ink-700 bg-ink-950 px-3 py-2 font-mono text-xs text-ink-300 transition hover:border-spark hover:text-spark"
+          class="w-full rounded border border-ink-300 bg-ink-50 px-3 py-2 font-mono text-xs text-ink-700 transition hover:border-spark hover:text-spark"
         >
-          clear conversation
+          清空对话
         </button>
       </aside>
 
@@ -190,10 +190,10 @@ const handleSample = (text: string) => {
           <!-- 空状态 -->
           <div v-if="messages.length === 0" class="flex h-full flex-col items-center justify-center text-center">
             <div class="mb-4 text-5xl">💬</div>
-            <h3 class="mb-2 font-display text-xl font-bold text-ink-100">
+            <h3 class="mb-2 font-display text-xl font-bold text-ink-900">
               ./start-conversation --agent={{ currentAgent.slug }}
             </h3>
-            <p class="mb-8 max-w-md text-sm text-ink-300">
+            <p class="mb-8 max-w-md text-sm text-ink-700">
               试着问一个关于 <span class="text-spark">少儿编程</span> 的问题，或点击下方示例：
             </p>
             <div class="flex w-full max-w-md flex-col gap-2">
@@ -201,9 +201,9 @@ const handleSample = (text: string) => {
                 v-for="q in SAMPLE_QUESTIONS[currentSlug]"
                 :key="q"
                 @click="handleSample(q)"
-                class="group rounded border border-ink-700 bg-ink-900 p-3 text-left text-sm text-ink-300 transition hover:border-spark hover:bg-ink-800"
+                class="group rounded border border-ink-300 bg-ink-100 p-3 text-left text-sm text-ink-700 transition hover:border-spark hover:bg-ink-200"
               >
-                <span class="prompt">$</span> {{ q }}
+                 {{ q }}
               </button>
             </div>
           </div>
@@ -216,9 +216,9 @@ const handleSample = (text: string) => {
           />
 
           <!-- Loading -->
-          <div v-if="loading" class="flex animate-fade-in items-center gap-2 font-mono text-sm text-ink-500">
-            <span class="prompt">$</span>
-            <span>thinking</span>
+          <div v-if="loading" class="flex animate-fade-in items-center gap-2 font-mono text-sm text-ink-600">
+            
+            <span>思考中</span>
             <span class="animate-pulse-dot">.</span>
             <span class="animate-pulse-dot" style="animation-delay: 0.2s">.</span>
             <span class="animate-pulse-dot" style="animation-delay: 0.4s">.</span>
@@ -226,21 +226,21 @@ const handleSample = (text: string) => {
         </div>
 
         <!-- 输入框 -->
-        <div class="border-t border-ink-800 bg-ink-900 p-4">
+        <div class="border-t border-ink-300 bg-ink-100 p-4">
           <div class="flex items-center gap-2">
-            <span class="prompt">$</span>
+            
             <input
               v-model="input"
               @keydown.enter="handleSend"
               type="text"
               :disabled="loading"
               placeholder="输入你的问题，按 Enter 发送..."
-              class="flex-1 rounded border border-ink-700 bg-ink-950 px-4 py-2.5 font-mono text-sm text-ink-100 placeholder-ink-500 focus:border-spark focus:outline-none disabled:opacity-50"
+              class="flex-1 rounded border border-ink-300 bg-ink-50 px-4 py-2.5 font-mono text-sm text-ink-900 placeholder-ink-500 focus:border-spark focus:outline-none disabled:opacity-50"
             />
             <button
               @click="handleSend"
               :disabled="loading || !input.trim()"
-              class="rounded border border-spark bg-spark px-5 py-2.5 font-mono text-sm text-ink-950 transition hover:bg-spark-dark hover:text-ink-100 disabled:opacity-50"
+              class="rounded border border-spark bg-spark px-5 py-2.5 font-mono text-sm text-white transition hover:bg-spark-dark hover:text-ink-900 disabled:opacity-50"
             >
               send →
             </button>
