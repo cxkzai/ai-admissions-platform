@@ -40,8 +40,10 @@ services:
     environment:
       - IS_PERSISTENT=TRUE
       - PERSIST_DIRECTORY=/chroma/chroma
+    # chromadb/chroma:latest 镜像精简到无 curl/wget/python
+    # /dev/tcp 是 bash 内置伪设备（dash 不支持），用 bash -c 显式调用
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/8000"]
       interval: 10s
       timeout: 5s
       retries: 5

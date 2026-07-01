@@ -13,7 +13,7 @@ readme = "README.md"
 dependencies = []
 
 [tool.uv.workspace]
-members = ["apps/api", "packages/shared"]
+members = ["apps/api"]
 
 [tool.uv]
 dev-dependencies = [
