@@ -52,17 +52,17 @@ export interface Conversation {
 }
 
 export interface ChatRequest {
-  conversationId?: string;
-  agentSlug: AgentSlug;
+  conversation_id?: string;
+  agent_slug: AgentSlug;
   message: string;
   metadata?: Record<string, unknown>;
 }
 
 export interface ChatResponse {
-  conversationId: string;
-  messageId: string;
+  conversation_id: string;
+  message_id: string;
   content: string;
-  toolCalls?: ToolCall[];
+  tool_calls?: ToolCall[];
   citations?: Citation[];
-  latencyMs: number;
+  latency_ms: number;
 }

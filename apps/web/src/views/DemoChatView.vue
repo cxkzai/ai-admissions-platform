@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, computed, watch, nextTick, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import ChatMessage from '@/components/ChatMessage.vue';
 import { useChat } from '@/composables/useChat';
+import {
+  useSessionHistory,
+  extractSession,
+  formatRelativeTime,
+} from '@/composables/useSessionHistory';
+import api from '@/lib/api';
 import type { Agent, AgentSlug } from '@/types/chat';
 
 const AGENTS: Agent[] = [
@@ -45,6 +51,7 @@ const AGENTS: Agent[] = [
 ];
 
 const route = useRoute();
+const router = useRouter();
 
 const currentSlug = computed<AgentSlug>(() => {
   const q = route.query.agent as AgentSlug | undefined;
@@ -53,7 +60,106 @@ const currentSlug = computed<AgentSlug>(() => {
 
 const currentAgent = computed(() => AGENTS.find((a) => a.slug === currentSlug.value)!);
 
-const { messages, loading, send, clear } = useChat(currentSlug.value);
+const { messages, loading, send, clear, loadMessages, error, retry, isDirty } = useChat(currentSlug.value);
+const {
+  history,
+  add: addHistory,
+  getById: getHistoryById,
+  update: updateHistory,
+  remove: removeHistory,
+  clearAll: clearAllHistory,
+} = useSessionHistory();
+
+// 真实后端连接状态（不靠 messages.length 假判断）
+type BackendStatus = 'checking' | 'connected' | 'disconnected';
+const backendStatus = ref<BackendStatus>('checking');
+
+async function healthCheck() {
+  backendStatus.value = 'checking';
+  try {
+    await api.health();
+    backendStatus.value = 'connected';
+  } catch {
+    backendStatus.value = 'disconnected';
+  }
+}
+
+onMounted(() => {
+  healthCheck();
+});
+
+// 发送成功 → connected；失败 → disconnected
+watch(error, (err) => {
+  if (err) backendStatus.value = 'disconnected';
+  else backendStatus.value = 'connected';
+});
+
+const statusLabel = computed(() => {
+  switch (backendStatus.value) {
+    case 'checking':
+      return { text: '检测中…', dotClass: 'bg-ink-500 animate-pulse' };
+    case 'connected':
+      return { text: '已连接后端', dotClass: 'bg-grow' };
+    case 'disconnected':
+      return { text: '后端不可用', dotClass: 'bg-spark' };
+  }
+});
+
+const dismissError = () => {
+  error.value = null;
+};
+
+// 标记：当前是否在"从历史加载"流程中（用于跳过 watch 的自动清空）
+const loadingFromHistory = ref(false);
+// 标记：当前 messages 是否来自历史重放（切走时跳过存历史，避免重复副本）
+const loadedFromHistory = ref(false);
+// 记录当前加载的源 session id（用于"加载历史后继续聊→切走时合并到原 session"）
+const currentSessionId = ref<string | null>(null);
+
+// 切换 agent 时：
+//   1) 来自历史加载 → 跳过存新（避免重复）；如果用户聊过（isDirty），合并到原 session
+//   2) 正常切 agent → 把当前 session 存为新历史
+watch(currentSlug, (newSlug, oldSlug) => {
+  if (loadingFromHistory.value) {
+    // 从历史加载触发的切 agent —— 跳过自动清空，由 loadFromHistory 自己负责加载
+    loadingFromHistory.value = false;
+    return;
+  }
+  if (loadedFromHistory.value) {
+    // 加载历史后切走：
+    if (isDirty.value && currentSessionId.value && oldSlug) {
+      // 用户聊过了 —— 把新内容合并回原 session（更新 messages / message_count / preview / updated_at）
+      const updated = extractSession(oldSlug, messages.value);
+      if (updated) updateHistory(currentSessionId.value, updated);
+    }
+    // 不管是否聊过，都清空（不创建新副本）
+    loadedFromHistory.value = false;
+    currentSessionId.value = null;
+    clear();
+    return;
+  }
+  if (oldSlug && oldSlug !== newSlug && messages.value.length > 0) {
+    const meta = extractSession(oldSlug, messages.value);
+    if (meta) addHistory(meta);
+  }
+  clear();
+});
+
+const loadFromHistory = (sessionId: string) => {
+  const session = getHistoryById(sessionId);
+  if (!session) return;
+  loadingFromHistory.value = true;
+  loadedFromHistory.value = true;  // 标记 messages 来自历史，切走时走合并/跳过逻辑
+  currentSessionId.value = sessionId;  // 记录源 session id（用户聊后切走时合并回这里）
+  router.replace({ query: { agent: session.agent_slug } });
+  // 等 watch 跑完（清掉标志），再加载 messages
+  nextTick(() => {
+    loadMessages(session.messages);
+  });
+};
+
+const agentIcon = (slug: AgentSlug): string =>
+  AGENTS.find((a) => a.slug === slug)?.icon ?? '💬';
 
 const SAMPLE_QUESTIONS: Record<AgentSlug, string[]> = {
   'admission-consultant': [
@@ -113,9 +219,50 @@ const handleSample = (text: string) => {
         </router-link>
         <span class="text-ink-700">/</span>
         <span class="text-sm font-medium text-ink-900">智能体对话</span>
-        <span class="ml-auto text-xs text-ink-600">
-          {{ messages.length === 0 ? '演示模式（未连接后端）' : '已连接后端' }}
+        <span class="ml-auto flex items-center gap-1.5 text-xs text-ink-600">
+          <span :class="['inline-block h-2 w-2 rounded-full', statusLabel.dotClass]"></span>
+          <span>{{ statusLabel.text }}</span>
+          <button
+            v-if="backendStatus !== 'checking'"
+            @click="healthCheck"
+            class="ml-2 font-mono text-xs text-ink-500 transition hover:text-spark"
+            title="重新检测后端"
+          >
+            重测
+          </button>
         </span>
+      </div>
+
+      <!-- 错误提示横幅（只在有 error 时显示） -->
+      <div
+        v-if="error"
+        class="border-b border-spark/40 bg-spark/10 px-6 py-2.5 text-sm text-ink-900"
+        role="alert"
+      >
+        <div class="container-page flex items-start gap-3">
+          <span class="font-mono text-spark">⚠</span>
+          <div class="flex-1">
+            <div class="font-medium text-spark">发送失败</div>
+            <div class="mt-0.5 text-ink-800">{{ error }}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              @click="retry"
+              :disabled="loading"
+              class="rounded border border-spark bg-spark px-3 py-1 font-mono text-xs text-white transition hover:bg-spark-dark hover:text-ink-900 disabled:opacity-50"
+              title="重发上一次失败的消息"
+            >
+              {{ loading ? '重试中…' : '↻ 重试发送' }}
+            </button>
+            <button
+              @click="dismissError"
+              class="font-mono text-ink-600 transition hover:text-ink-900"
+              title="关闭提示"
+            >
+              ×
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Agent 切换 Tab -->
@@ -179,6 +326,54 @@ const handleSample = (text: string) => {
         >
           清空对话
         </button>
+
+        <!-- 对话记录（本次会话内） -->
+        <div class="mt-6">
+          <div class="mb-2 flex items-center justify-between">
+            <div class="font-mono text-xs text-ink-600">
+              <span class="prompt">#</span> 对话记录
+            </div>
+            <button
+              v-if="history.length > 0"
+              @click="clearAllHistory"
+              class="font-mono text-xs text-ink-600 transition hover:text-spark"
+            >
+              全部清空
+            </button>
+          </div>
+
+          <div v-if="history.length === 0" class="font-mono text-xs text-ink-600">
+            暂无记录
+          </div>
+
+          <ul v-else class="space-y-1.5">
+            <li
+              v-for="s in history"
+              :key="s.id"
+              class="group cursor-pointer rounded border border-ink-300 bg-ink-50 p-2 transition hover:border-spark hover:bg-ink-100"
+              @click="loadFromHistory(s.id)"
+              :title="`点击恢复「${s.title}」的对话`"
+            >
+              <div class="flex items-center gap-1.5 text-xs font-medium text-ink-900">
+                <span>{{ agentIcon(s.agent_slug) }}</span>
+                <span class="truncate">{{ s.title }}</span>
+              </div>
+              <div class="mt-1 flex items-center justify-between font-mono text-xs text-ink-600">
+                <span>{{ formatRelativeTime(s.updated_at) }}</span>
+                <span>· {{ s.message_count }} 条</span>
+              </div>
+              <div v-if="s.preview" class="mt-1 truncate text-xs text-ink-700">
+                {{ s.preview }}
+              </div>
+              <button
+                @click.stop="removeHistory(s.id)"
+                class="mt-1 font-mono text-xs text-ink-600 opacity-0 transition hover:text-spark group-hover:opacity-100"
+              >
+                删除
+              </button>
+            </li>
+          </ul>
+        </div>
       </aside>
 
       <!-- 右侧对话区 -->
